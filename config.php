@@ -20,8 +20,7 @@ $host = $_ENV['DB_HOST'] ?? 'localhost';
 $user = $_ENV['DB_USER'] ?? 'root';
 $pass = $_ENV['DB_PASS'] ?? '';
 $db   = $_ENV['DB_NAME'] ?? 'elearning';
-
-$conn = mysqli_connect($host, $user, $pass, $db);
+$driver = 'mysql'; // Loại cơ sở dữ liệu
 
 // debug error
 const DEBUG = true; // Bật/tắt chế độ gỡ lỗi

@@ -8,8 +8,8 @@ session_start();
 //tránh trường hợp lỗi
 ob_start(); //header, cookie
 
-//kiểm tra truy cập có hợp lệ
 require_once 'config.php'; //khai báo hằng _THAI
+require_once './includes/connect.php'; //kết nối database
 
 $module = _MODULES; // module mặc định
 $action = _ACTION; // action mặc định
