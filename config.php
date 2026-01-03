@@ -1,6 +1,9 @@
 <?php
 const _THAI = true; // kiểm tra truy cập có hơp lệ cho các file
 
+const _MODULES = 'dashboard'; // module mặc định
+const _ACTION = 'index'; // action mặc định
+
 // Cấu hình kết nối cơ sở dữ liệu
 // Hàm bổ trợ đọc file .env đơn giản
 if (file_exists(__DIR__ . '/.env')) {
