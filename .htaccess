@@ -1,0 +1,12 @@
+# Ngăn chặn truy cập trực tiếp vào file .env
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Ngăn chặn duyệt thư mục (tránh lộ danh sách file)
+Options -Indexes
+
+# Ngăn chặn truy cập vào các thư mục nhạy cảm
+RewriteEngine On
+RewriteRule ^(includes|modules|templates)/.*$ - [F,L]

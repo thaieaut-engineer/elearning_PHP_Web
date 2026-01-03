@@ -1,0 +1,9 @@
+# Chặn file chứa mật khẩu thật
+.env
+
+# Chặn các file rác của hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Nếu bạn dùng VS Code
+.vscode/
