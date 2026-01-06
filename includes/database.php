@@ -12,6 +12,15 @@ function getAll($sql){
     return $result;
 }
 
+// Đếm số bản ghi
+function getRow($sql){
+    global $conn;// Sử dụng biến toàn cục $conn
+    $stm = $conn->prepare($sql);
+    $stm->execute();
+    $result = $stm->rowCount();
+    return $result;
+}
+
 // Truy vấn một bản ghi
 function getOnce($sql){
     global $conn;// Sử dụng biến toàn cục $conn
@@ -50,5 +59,19 @@ function update($table, $data, $where){
         $stm->bindValue(":$key", $value);// Gán giá trị
     }
     return $stm->execute();// Thực thi và trả về kết quả
+}
+
+// Xóa dữ liệu
+function delete($table, $where){
+    global $conn;
+    $sql = "DELETE FROM $table WHERE $where";// Câu lệnh SQL
+    $stm = $conn->prepare($sql);// Chuẩn bị câu lệnh
+    return $stm->execute();// Thực thi và trả về kết quả
+}
+
+// Lấy ID của bản ghi mới nhất
+function lastID(){
+    global $conn;
+    return $conn->lastInsertId();// Trả về ID của bản ghi mới nhất
 }
 ?>
