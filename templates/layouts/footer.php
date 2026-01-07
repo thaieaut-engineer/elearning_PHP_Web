@@ -3,7 +3,7 @@
 
 <footer class="main-footer">
     <strong>Copyright &copy;
-        <?php echo date("Y"); ?> <a href="#">Học Viện Thầy Ái</a>.
+        <?php echo date("Y"); ?> <a href="#">Quản trị hệ thống khóa học</a>.
     </strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
