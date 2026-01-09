@@ -10,8 +10,11 @@ ob_start(); //header, cookie
 
 require_once 'config.php'; //khai báo hằng _THAI
 require_once './includes/connect.php'; //kết nối database
+require_once './includes/database.php'; //hàm thao tác database
 require_once './includes/functions.php'; //hàm chung
 require_once './includes/session.php'; //hàm session
+
+require_once './templates/layouts/index.php'; //nạp layout chung
 
 $module = _MODULES; // module mặc định
 $action = _ACTION; // action mặc định

@@ -9,4 +9,4 @@ Options -Indexes
 
 # Ngăn chặn truy cập vào các thư mục nhạy cảm
 RewriteEngine On
-RewriteRule ^(includes|modules|templates)/.*$ - [F,L]
+RewriteRule ^(includes|modules|templates)/(?!assets/).*$ - [F,L]
