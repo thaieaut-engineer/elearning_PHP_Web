@@ -3,7 +3,10 @@ if(!defined('_THAI')){
     die('Error: You do not have permission to access this page.');
 }
 
-layout('header-auth');
+$data = [
+    'title' => 'Kích hoạt tài khoản'
+];
+layout('header-auth', $data);
 ?>
 
 <section class="vh-100">

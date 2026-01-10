@@ -3,7 +3,11 @@ if(!defined('_THAI')){
     die('Error: You do not have permission to access this page.');
 }
 
-layout('header-auth');
+// Set the page title and include the header layout
+$data = [
+    'title' => 'Đăng nhập hệ thống'
+];
+layout('header-auth', $data);
 ?>
 
 <section class="vh-100">
