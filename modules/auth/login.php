@@ -2,7 +2,8 @@
 if(!defined('_THAI')){
     die('Error: You do not have permission to access this page.');
 }
-require_once 'templates/layouts/header-auth.php';
+
+layout('header-auth');
 ?>
 
 <section class="vh-100">
@@ -48,4 +49,4 @@ require_once 'templates/layouts/header-auth.php';
 </section>
 
 <?php
-require_once 'templates/layouts/footer.php';
+layout('footer');
