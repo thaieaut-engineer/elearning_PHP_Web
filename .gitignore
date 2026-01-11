@@ -1,5 +1,6 @@
 # Chặn file chứa mật khẩu thật
 .env
+/includes/functionsc.php
 
 # Chặn các file rác của hệ điều hành
 .DS_Store
