@@ -127,3 +127,19 @@ function filterData($method = ''){
     }
     return $filterArr;
 }
+
+// Validate email
+function validateEmail($email) {
+    if(!empty($email)) {
+        $checkEmail = filter_var($email, FILTER_VALIDATE_EMAIL);// Validate email format
+    }
+    return $checkEmail;
+}
+
+// Validate int
+function validateInt($int) {
+    if(!empty($int)) {
+        $checkInt = filter_var($int, FILTER_VALIDATE_INT);
+    }
+    return $checkInt;
+}
