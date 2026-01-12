@@ -143,3 +143,16 @@ function validateInt($int) {
     }
     return $checkInt;
 }
+
+// Validate phone number
+function validatePhone($phone) {
+    if(!empty($phone)) {
+        $pattern = '/^(0|\+84)(3[2-9]|5[6|8|9]|7[0|6-9]|8[1-5]|9[0-4|6-9])[0-9]{7}$/';
+        if(preg_match($pattern, $phone)) {
+            return $phone;
+        } else {
+            return false;
+        }
+    }
+    return false;
+}
