@@ -8,12 +8,65 @@ $data = [
 ];
 layout('header-auth', $data);
 
-if(!empty($_POST)){
-  $filterArr = filterData('post');
+if(isPost()){
+  $filter = filterData();
+  $errors = [];
+
+  // Validate name
+  if(empty(trim($filter['fullname']))){
+    $errors['fullname']['required'] = 'Vui lòng nhập họ tên.';
+  }else{
+    if(strlen(trim($filter['fullname'])) < 3){
+      $errors['fullname']['min'] = 'Họ tên phải có ít nhất 3 ký tự.';
+    }
+    if(strlen(trim($filter['fullname'])) > 50){
+      $errors['fullname']['max'] = 'Họ tên không được vượt quá 50 ký tự.';
+    }
+  }
+
+  // Validate email
+  if(empty(trim($filter['email']))){
+    $errors['email']['required'] = 'Vui lòng nhập địa chỉ email.';
+}else{
+    if(!validateEmail(trim($filter['email']))){
+      $errors['email']['invalid'] = 'Địa chỉ email không hợp lệ.';
+    }else{
+      $email = trim($filter['email']);
+      $checkEmail = getRow("SELECT * FROM users WHERE email = '$email'");
+      if($checkEmail > 0){
+        $errors['email']['exists'] = 'Địa chỉ email đã được sử dụng.';
+      }
+    }
+  }
+
+  // Validate phone
+  if(empty(trim($filter['phone']))){
+    $errors['phone']['required'] = 'Vui lòng nhập số điện thoại.';
+  }else{
+    if(!validatePhone(trim($filter['phone']))){
+      $errors['phone']['invalid'] = 'Số điện thoại không hợp lệ.';
+  }
+  }
+
+  // Validate password
+  if(empty(trim($filter['password']))){
+    $errors['password']['required'] = 'Vui lòng nhập mật khẩu.';
+  }else{
+    if(strlen(trim($filter['password'])) < 6){
+      $errors['password']['min'] = 'Mật khẩu phải có ít nhất 6 ký tự.';
+    }
+  }
+
+  // Validate confirm password
+  if(trim($filter['password']) !== $filter['confirm_password']){
+    $errors['confirm_password']['mismatch'] = 'Mật khẩu xác nhận không khớp.';
+  }
+
+  if(!empty($errors)){
     echo '<pre>';
-    print_r($filterArr);
+    print_r($errors);
     echo '</pre>';
-    die();
+  }
 }
 ?>
 
@@ -32,11 +85,11 @@ if(!empty($_POST)){
 
           <!-- Email input -->
           <div data-mdb-input-init class="form-outline mb-4">
-            <input name="name" type="text" id="form3Example3" class="form-control form-control-lg"
+            <input name="fullname" type="text" id="form3Example3" class="form-control form-control-lg"
               placeholder="Họ tên" />
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
-            <input name="email" type="email" id="form3Example3" class="form-control form-control-lg"
+            <input name="email" type="text" id="form3Example3" class="form-control form-control-lg"
               placeholder="Địa chỉ email" />
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
