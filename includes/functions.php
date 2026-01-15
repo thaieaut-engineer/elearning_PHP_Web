@@ -161,3 +161,8 @@ function validatePhone($phone) {
 function getMsg ($msg, $type='success'){
     echo '<div class="alert alert-'.$type.'" role="alert">'.$msg.'</div>';
 }
+
+// hiển thị lỗi
+function formError($errors, $fieldName){
+    return !empty($errors[$fieldName]) ? '<div class="error-message">'.reset($errors[$fieldName]).'</div>' : false;// Hiển thị lỗi cho trường cụ thể
+}

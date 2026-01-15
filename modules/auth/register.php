@@ -10,6 +10,8 @@ layout('header-auth', $data);
 
 $msg = '';
 $msgType = '';
+$errorsArr = [];
+
 if(isPost()){
   $filter = filterData();
   $errors = [];
@@ -71,7 +73,10 @@ if(isPost()){
   }else{
     $msg = 'Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.';
     $msgType = 'danger';
+
+    setSessionFlash('errors', $errors);
 }
+$errorsArr = getSessionFlash('errors');
 }
 ?>
 
@@ -94,25 +99,29 @@ if(isPost()){
           <div data-mdb-input-init class="form-outline mb-4">
             <input name="fullname" type="text" id="form3Example3" class="form-control form-control-lg"
               placeholder="Họ tên" />
-              <div class="error-message">lỗi</div>
+              <?php echo formError($errorsArr, 'fullname'); ?>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
             <input name="email" type="text" id="form3Example3" class="form-control form-control-lg"
               placeholder="Địa chỉ email" />
+              <?php echo formError($errorsArr, 'email'); ?>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
             <input name="phone" type="text" id="form3Example3" class="form-control form-control-lg"
               placeholder="Số điện thoại" />
+              <?php echo formError($errorsArr, 'phone'); ?>
           </div>
 
           <!-- Password input -->
           <div data-mdb-input-init class="form-outline mb-3">
             <input name="password" type="password" id="form3Example4" class="form-control form-control-lg"
               placeholder="Nhập mật khẩu" />
+              <?php echo formError($errorsArr, 'password'); ?>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
             <input name="confirm_password" type="password" id="form3Example3" class="form-control form-control-lg"
               placeholder="Nhập lại mật khẩu" />
+              <?php echo formError($errorsArr, 'confirm_password'); ?>
           </div>
 
           <div class="text-center text-lg-start mt-4 pt-2">
