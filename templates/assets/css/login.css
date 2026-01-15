@@ -13,3 +13,8 @@ height: calc(100% - 73px);
 height: 100%;
 }
 }
+
+.error-message {
+    padding: 5px;
+color: red;
+}

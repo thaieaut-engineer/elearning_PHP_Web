@@ -156,3 +156,8 @@ function validatePhone($phone) {
     }
     return false;
 }
+
+// thông báo lỗi
+function getMsg ($msg, $type='success'){
+    echo '<div class="alert alert-'.$type.'" role="alert">'.$msg.'</div>';
+}

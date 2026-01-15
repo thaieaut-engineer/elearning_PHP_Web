@@ -8,6 +8,8 @@ $data = [
 ];
 layout('header-auth', $data);
 
+$msg = '';
+$msgType = '';
 if(isPost()){
   $filter = filterData();
   $errors = [];
@@ -23,6 +25,7 @@ if(isPost()){
       $errors['fullname']['max'] = 'Họ tên không được vượt quá 50 ký tự.';
     }
   }
+
 
   // Validate email
   if(empty(trim($filter['email']))){
@@ -62,11 +65,13 @@ if(isPost()){
     $errors['confirm_password']['mismatch'] = 'Mật khẩu xác nhận không khớp.';
   }
 
-  if(!empty($errors)){
-    echo '<pre>';
-    print_r($errors);
-    echo '</pre>';
-  }
+  if(empty($errors)){
+    $msg = 'Đăng ký tài khoản thành công. Vui lòng đăng nhập.';
+    $msgType = 'success';
+  }else{
+    $msg = 'Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.';
+    $msgType = 'danger';
+}
 }
 ?>
 
@@ -78,6 +83,8 @@ if(isPost()){
           class="img-fluid" alt="Sample image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <?php getMsg($msg, $msgType); ?>
+        
         <form method="POST" action="" enctype="multipart/form-data">
           <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
             <h2 class="fw-normal mb-5 me-3">Đăng ký tài khoản</h2>
@@ -87,6 +94,7 @@ if(isPost()){
           <div data-mdb-input-init class="form-outline mb-4">
             <input name="fullname" type="text" id="form3Example3" class="form-control form-control-lg"
               placeholder="Họ tên" />
+              <div class="error-message">lỗi</div>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
             <input name="email" type="text" id="form3Example3" class="form-control form-control-lg"
