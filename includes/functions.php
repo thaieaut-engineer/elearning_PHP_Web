@@ -166,3 +166,8 @@ function getMsg ($msg, $type='success'){
 function formError($errors, $fieldName){
     return !empty($errors[$fieldName]) ? '<div class="error-message">'.reset($errors[$fieldName]).'</div>' : false;// Hiển thị lỗi cho trường cụ thể
 }
+
+// hien thi du lieu cu
+function oldData($oldData, $fieldName){
+    return !empty($oldData[$fieldName]) ? $oldData[$fieldName] : '';// Lấy dữ liệu cũ cho trường cụ thể
+}

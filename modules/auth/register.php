@@ -74,8 +74,11 @@ if(isPost()){
     $msg = 'Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.';
     $msgType = 'danger';
 
+    setSessionFlash('old_data', $filter);
     setSessionFlash('errors', $errors);
 }
+// lấy lại dữ liệu cũ và lỗi
+$oldData = getSessionFlash('old_data');
 $errorsArr = getSessionFlash('errors');
 }
 ?>
@@ -97,17 +100,17 @@ $errorsArr = getSessionFlash('errors');
 
           <!-- Email input -->
           <div data-mdb-input-init class="form-outline mb-4">
-            <input name="fullname" type="text" id="form3Example3" class="form-control form-control-lg"
+            <input name="fullname" type="text" value="<?php echo oldData($oldData, 'fullname'); ?>" id="form3Example3" class="form-control form-control-lg"
               placeholder="Họ tên" />
               <?php echo formError($errorsArr, 'fullname'); ?>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
-            <input name="email" type="text" id="form3Example3" class="form-control form-control-lg"
+            <input name="email" type="text" value="<?php echo oldData($oldData, 'email'); ?>" id="form3Example3" class="form-control form-control-lg"
               placeholder="Địa chỉ email" />
               <?php echo formError($errorsArr, 'email'); ?>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
-            <input name="phone" type="text" id="form3Example3" class="form-control form-control-lg"
+            <input name="phone" type="text" value="<?php echo oldData($oldData, 'phone'); ?>" id="form3Example3" class="form-control form-control-lg"
               placeholder="Số điện thoại" />
               <?php echo formError($errorsArr, 'phone'); ?>
           </div>
