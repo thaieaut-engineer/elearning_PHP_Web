@@ -84,7 +84,7 @@ if(isPost()){
     if($insert){
       $emailTo  = $filter['email'];
       $subject  = 'Kích hoạt tài khoản';
-      $content = 'Xin chào '.$filter['fullname'].',<br/>Vui lòng nhấn vào liên kết bên dưới để kích hoạt tài khoản của bạn:<br/><a href="'.HOST_URL.'/?module=auth&action=activate&token='.$activeToken.'">Kích hoạt tài khoản</a><br/>Cảm ơn bạn đã đăng ký tài khoản tại website của chúng tôi.';
+      $content = 'Xin chào '.$filter['fullname'].',<br/>Vui lòng nhấn vào liên kết bên dưới để kích hoạt tài khoản của bạn:<br/><a href="'.HOST_URL.'/?module=auth&action=active&token='.$activeToken.'">Kích hoạt tài khoản</a><br/>Cảm ơn bạn đã đăng ký tài khoản tại website của chúng tôi.';
       // Gửi email kích hoạt
       sendMail($emailTo, $subject, $content);
       setSessionFlash('msg', 'Đăng ký tài khoản thành công! Vui lòng kiểm tra email để kích hoạt tài khoản.');
