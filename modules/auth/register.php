@@ -11,6 +11,7 @@ layout('header-auth', $data);
 $msg = '';
 $msgType = '';
 $errorsArr = [];
+$oldData = [];
 
 if(isPost()){
   $filter = filterData();
@@ -68,19 +69,44 @@ if(isPost()){
   }
 
   if(empty($errors)){
-    $msg = 'Đăng ký tài khoản thành công. Vui lòng đăng nhập.';
-    $msgType = 'success';
-  }else{
-    $msg = 'Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.';
-    $msgType = 'danger';
+    $activeToken = sha1(uniqid().time());
+    $data = [
+      'fullname' => trim($filter['fullname']),
+      'address' => trim($filter['address']),
+      'phone' => trim($filter['phone']),
+      'password' => password_hash(trim($filter['password']), PASSWORD_DEFAULT),
+      'email' => trim($filter['email']),
+      'active_token' => $activeToken,
+      'group_id' => 1,
+      'created_at' => date('Y-m-d H:i:s')
+    ];
+    $insert = insert('users', $data);
+    if($insert){
+      $emailTo  = $filter['email'];
+      $subject  = 'Kích hoạt tài khoản';
+      $content = 'Xin chào '.$filter['fullname'].',<br/>Vui lòng nhấn vào liên kết bên dưới để kích hoạt tài khoản của bạn:<br/><a href="'.HOST_URL.'/?module=auth&action=activate&token='.$activeToken.'">Kích hoạt tài khoản</a><br/>Cảm ơn bạn đã đăng ký tài khoản tại website của chúng tôi.';
+      // Gửi email kích hoạt
+      sendMail($emailTo, $subject, $content);
+      setSessionFlash('msg', 'Đăng ký tài khoản thành công! Vui lòng kiểm tra email để kích hoạt tài khoản.');
+      setSessionFlash('msg_type', 'success');
+    }else{
+      setSessionFlash('msg', 'Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.');
+      setSessionFlash('msg_type', 'danger');
+    }
 
+  }else{
+    setSessionFlash('msg', 'Đăng ký tài khoản thất bại. Vui lòng kiểm tra lại thông tin.');
+    setSessionFlash('msg_type', 'danger');
     setSessionFlash('old_data', $filter);
     setSessionFlash('errors', $errors);
 }
+$msg = getSessionFlash('msg');
+$msgType = getSessionFlash('msg_type');
 // lấy lại dữ liệu cũ và lỗi
 $oldData = getSessionFlash('old_data');
 $errorsArr = getSessionFlash('errors');
 }
+
 ?>
 
 <section class="vh-100">
