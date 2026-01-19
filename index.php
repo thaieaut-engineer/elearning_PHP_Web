@@ -1,6 +1,4 @@
 <?php
-error_reporting(0);// tắt báo lỗi
-ini_set('display_errors', 0);// không hiển thị lỗi
 date_default_timezone_set('Asia/Ho_Chi_Minh');
 //echo "Current date and time: " . date('Y-m-d H:i:s');
 

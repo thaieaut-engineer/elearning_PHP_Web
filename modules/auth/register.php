@@ -8,11 +8,6 @@ $data = [
 ];
 layout('header-auth', $data);
 
-$msg = '';
-$msgType = '';
-$errorsArr = [];
-$oldData = [];
-
 if(isPost()){
   $filter = filterData();
   $errors = [];
@@ -117,7 +112,10 @@ $errorsArr = getSessionFlash('errors');
           class="img-fluid" alt="Sample image">
       </div>
       <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-        <?php getMsg($msg, $msgType); ?>
+        <?php 
+        if(!empty($msg) && !empty($msgType)){
+        getMsg($msg, $msgType);
+        } ?>
         
         <form method="POST" action="" enctype="multipart/form-data">
           <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
@@ -126,31 +124,47 @@ $errorsArr = getSessionFlash('errors');
 
           <!-- Email input -->
           <div data-mdb-input-init class="form-outline mb-4">
-            <input name="fullname" type="text" value="<?php echo oldData($oldData, 'fullname'); ?>" id="form3Example3" class="form-control form-control-lg"
+            <input name="fullname" type="text" value="<?php 
+            if (!empty($oldData))
+            echo oldData($oldData, 'fullname'); ?>" id="form3Example3" class="form-control form-control-lg"
               placeholder="Họ tên" />
-              <?php echo formError($errorsArr, 'fullname'); ?>
+              <?php 
+              if (!empty($errorsArr))
+              echo formError($errorsArr, 'fullname'); ?>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
-            <input name="email" type="text" value="<?php echo oldData($oldData, 'email'); ?>" id="form3Example3" class="form-control form-control-lg"
+            <input name="email" type="text" value="<?php 
+            if (!empty($oldData))
+            echo oldData($oldData, 'email'); ?>" id="form3Example3" class="form-control form-control-lg"
               placeholder="Địa chỉ email" />
-              <?php echo formError($errorsArr, 'email'); ?>
+              <?php 
+              if (!empty($errorsArr))
+              echo formError($errorsArr, 'email'); ?>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
-            <input name="phone" type="text" value="<?php echo oldData($oldData, 'phone'); ?>" id="form3Example3" class="form-control form-control-lg"
+            <input name="phone" type="text" value="<?php 
+            if (!empty($oldData))
+            echo oldData($oldData, 'phone'); ?>" id="form3Example3" class="form-control form-control-lg"
               placeholder="Số điện thoại" />
-              <?php echo formError($errorsArr, 'phone'); ?>
+              <?php 
+              if (!empty($errorsArr))
+              echo formError($errorsArr, 'phone'); ?>
           </div>
 
           <!-- Password input -->
           <div data-mdb-input-init class="form-outline mb-3">
             <input name="password" type="password" id="form3Example4" class="form-control form-control-lg"
               placeholder="Nhập mật khẩu" />
-              <?php echo formError($errorsArr, 'password'); ?>
+              <?php 
+              if (!empty($errorsArr))
+              echo formError($errorsArr, 'password'); ?>
           </div>
           <div data-mdb-input-init class="form-outline mb-4">
             <input name="confirm_password" type="password" id="form3Example3" class="form-control form-control-lg"
               placeholder="Nhập lại mật khẩu" />
-              <?php echo formError($errorsArr, 'confirm_password'); ?>
+              <?php 
+              if (!empty($errorsArr))
+              echo formError($errorsArr, 'confirm_password'); ?>
           </div>
 
           <div class="text-center text-lg-start mt-4 pt-2">

@@ -2,7 +2,12 @@
 if (!defined('_THAI')) {
     die('Error: You do not have permission to access this page.');
 }
-require_once PATH_URL_TEMPLATES . '/layouts/header.php';
+
+$data = [
+    'title' => 'Dashboard'
+];
+layout('header', $data);
+layout('sidebar', $data);
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -94,5 +99,5 @@ require_once PATH_URL_TEMPLATES . '/layouts/header.php';
 <!-- /.content -->
 
 <?php
-require_once PATH_URL_TEMPLATES . '/layouts/footer.php';
+layout('footer');
 ?>
