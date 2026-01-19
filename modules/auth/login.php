@@ -52,6 +52,8 @@ if(isPost()){
           if($insertToken){
             setSessionFlash('msg', 'Đăng nhập thành công.');
             setSessionFlash('msg_type', 'success');
+
+            redirect('/');
           }else{
             setSessionFlash('msg', 'Đăng nhập thất bại. Vui lòng thử lại.');
             setSessionFlash('msg_type', 'danger');
@@ -63,7 +65,7 @@ if(isPost()){
         }
       }
     }
-    
+
 }else{
     setSessionFlash('msg', 'Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
     setSessionFlash('msg_type', 'danger');

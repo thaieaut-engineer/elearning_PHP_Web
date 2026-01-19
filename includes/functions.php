@@ -171,3 +171,15 @@ function formError($errors, $fieldName){
 function oldData($oldData, $fieldName){
     return !empty($oldData[$fieldName]) ? $oldData[$fieldName] : '';// Lấy dữ liệu cũ cho trường cụ thể
 }
+
+// hàm chuyển hướng
+function redirect($path, $pathFull = false){
+    if($pathFull){
+        header('Location: '.$path);
+        exit();
+    }else{
+        header('Location: '.HOST_URL.$path);
+        exit();
+    }
+    
+}
