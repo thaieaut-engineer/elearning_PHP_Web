@@ -32,8 +32,38 @@ if(isPost()){
   }
   // If there are validation errors, store them in session and redirect back to the login page
   if(empty($errors)){
-    setSessionFlash('msg', 'Đăng nhập thành công.');
-    setSessionFlash('msg_type', 'success');
+    $email = trim($filter['email']);
+    $password = trim($filter['password']);
+
+    //
+    $checkEmail = getOnce("SELECT * FROM users WHERE email = '$email'");
+    if(!empty($checkEmail)){
+      if(!empty($password)){
+        $checkStatus = password_verify($password, $checkEmail['password']);
+        if($checkStatus){
+          // Tạo token  và insert vào bảng token)login
+          $token = sha1(uniqid().time());
+          $data = [
+            'token' => $token,
+            'created_at' => date('Y-m-d H:i:s'),
+            'user_id' => $checkEmail['id']
+          ];
+          $insertToken = insert('token_login', $data);
+          if($insertToken){
+            setSessionFlash('msg', 'Đăng nhập thành công.');
+            setSessionFlash('msg_type', 'success');
+          }else{
+            setSessionFlash('msg', 'Đăng nhập thất bại. Vui lòng thử lại.');
+            setSessionFlash('msg_type', 'danger');
+          }
+        }else{
+          setSessionFlash('msg', 'Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
+          setSessionFlash('msg_type', 'danger');
+          setSessionFlash('old_data', $filter);
+        }
+      }
+    }
+    
 }else{
     setSessionFlash('msg', 'Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
     setSessionFlash('msg_type', 'danger');
