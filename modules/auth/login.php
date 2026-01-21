@@ -41,7 +41,15 @@ if(isPost()){
       if(!empty($password)){
         $checkStatus = password_verify($password, $checkEmail['password']);
         if($checkStatus){
-          // Tạo token  và insert vào bảng token)login
+          // Tài khoản chỉ đăng nhập một nơi
+          $user_id = $checkEmail['id'];
+          $checkAlready = getRow("SELECT * FROM token_login WHERE user_id = $user_id");
+          if($checkAlready > 0){
+            setSessionFlash('msg', 'Tài khoản của bạn đã được đăng nhập ở một thiết bị khác. Vui lòng đăng xuất khỏi thiết bị đó trước khi đăng nhập lại.');
+            setSessionFlash('msg_type', 'danger');
+            //redirect('?module=auth&action=login');
+          }else{
+            // Tạo token  và insert vào bảng token)login
           $token = sha1(uniqid().time());
 
           // gán token lên session
@@ -62,6 +70,8 @@ if(isPost()){
             setSessionFlash('msg', 'Đăng nhập thất bại. Vui lòng thử lại.');
             setSessionFlash('msg_type', 'danger');
           }
+          }
+
         }else{
           setSessionFlash('msg', 'Đăng nhập thất bại. Vui lòng kiểm tra lại email và mật khẩu.');
           setSessionFlash('msg_type', 'danger');
