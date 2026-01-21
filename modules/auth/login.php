@@ -43,6 +43,10 @@ if(isPost()){
         if($checkStatus){
           // Tạo token  và insert vào bảng token)login
           $token = sha1(uniqid().time());
+
+          // gán token lên session
+          setSessionFlash('login_token', $token);
+
           $data = [
             'token' => $token,
             'created_at' => date('Y-m-d H:i:s'),

@@ -183,3 +183,27 @@ function redirect($path, $pathFull = false){
     }
     
 }
+
+//
+function removeSession($key) {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (isset($_SESSION[$key])) {
+        unset($_SESSION[$key]);
+    }
+}
+
+
+// Hàm check login
+function checkLogin(){
+    $checkLogin = false;
+    $tokenLogin = getSessionFlash('login_token');
+    $checkToken = getOnce("SELECT * FROM token_login WHERE token = '$tokenLogin'");
+    if(!empty($checkToken)){
+        $checkLogin = true;
+    }else{
+        removeSession('login_token');
+    }
+    return $checkLogin;
+}

@@ -2,6 +2,11 @@
 if (!defined('_THAI')) {
     die('Error: You do not have permission to access this page.');
 }
+
+// Kiểm tra đăng nhập
+if(!checkLogin()){
+    redirect('?module=auth&action=login');
+}
 ?>
 <!DOCTYPE html>
 <html lang="vi">
