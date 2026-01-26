@@ -53,7 +53,7 @@ if(isPost()){
           $token = sha1(uniqid().time());
 
           // gán token lên session
-          setSessionFlash('login_token', $token);
+          setSession('token_login', $token);
 
           $data = [
             'token' => $token,

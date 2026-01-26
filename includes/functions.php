@@ -198,12 +198,12 @@ function removeSession($key) {
 // Hàm check login
 function checkLogin(){
     $checkLogin = false;
-    $tokenLogin = getSessionFlash('login_token');
+    $tokenLogin = getSession('token_login');
     $checkToken = getOnce("SELECT * FROM token_login WHERE token = '$tokenLogin'");
     if(!empty($checkToken)){
         $checkLogin = true;
     }else{
-        removeSession('login_token');
+        removeSession('token_login');
     }
     return $checkLogin;
 }
