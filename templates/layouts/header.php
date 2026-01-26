@@ -82,7 +82,7 @@ if(!checkLogin()){
                         <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="?module=dashboard" class="nav-link">
+                            <a href="<?php echo HOST_URL; ?>" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -94,19 +94,19 @@ if(!checkLogin()){
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="?module=course&action=list" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Danh sách</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="?module=course&action=add" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Thêm khóa học mới</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="?module=course_category&action=list" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Lĩnh vực</p>
                                     </a>
@@ -120,13 +120,13 @@ if(!checkLogin()){
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="?module=users&action=list" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Danh sách tài khoản</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="?module=users&action=add" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Tạo mới tài khoản</p>
                                     </a>
@@ -140,7 +140,7 @@ if(!checkLogin()){
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="" class="nav-link">
+                                    <a href="?module=students" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Danh sách học viên</p>
                                     </a>
