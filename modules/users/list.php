@@ -9,25 +9,59 @@ $data = [
 
 layout('header', $data);
 
-$getDatailUser = getAll("SELECT a.id, a.fullname, a.email, a.created_at, b.name FROM users a INNER JOIN groups b ON a.group_id = b.id");
+$filter = filterData();
+$chuoiWhere = '';
+$group ='0';
+$keyword ='';
+if(isGet()){
+  if(isset($filter['keyword'])){
+    $keyword = $filter['keyword'];
+  }
+  if(isset($filter['group'])){
+    $group = $filter['group'];
+  }
 
+  if(!empty($keyword)){
+    if(strpos($chuoiWhere, 'WHERE') == false){
+      $chuoiWhere .= ' WHERE ';
+    }else{
+      $chuoiWhere .= ' AND ';
+    }
+    $chuoiWhere .= " (a.fullname LIKE '%$keyword%' OR a.email LIKE '%$keyword%') ";
+  }
+
+  if(!empty($group)){
+    if(strpos($chuoiWhere, 'WHERE') == false){
+      $chuoiWhere .= ' WHERE ';
+    }else{
+      $chuoiWhere .= ' AND ';
+    }
+    $chuoiWhere .= " a.group_id = $group ";
+  }
+}
+
+$getDatailUser = getAll("SELECT a.id, a.fullname, a.email, a.created_at, b.name FROM users a INNER JOIN groups b ON a.group_id = b.id $chuoiWhere ORDER BY a.created_at DESC");
+
+$getGroup = getAll("SELECT * FROM groups");
 
 ?>
 <div class="container mt-4 mb-4">
   <h2 class="text-center mb-4">Danh sách người dùng</h2>
   <a href="?module=users&action=add" class="btn btn-success mb-3"><i class="fa-solid fa-plus"></i> Thêm người dùng mới</a>
   <form class="mb-3" action="" method="get">
+    <input type="hidden" name="module" value="users">
+    <input type="hidden" name="action" value="list">
     <div class="row">
     <div class="col-3">
-        <select name="" id="" class="form-select form-control">
+        <select name="group" id="" class="form-select form-control">
             <option value="">-- Chọn nhóm người dùng --</option>
-            <option value="admin">Quản trị viên</option>
-            <option value="editor">Biên tập viên</option>
-            <option value="user">Người dùng</option>
+            <?php foreach($getGroup as $item): ?>
+            <option value="<?= $item['id'] ?>" <?= ($item['id'] == $group) ? 'selected' : '' ?>><?= $item['name'] ?></option>
+            <?php endforeach; ?>
         </select>
     </div>
     <div class="col-6 d-flex">
-      <input type="text" class="form-control" name="search" placeholder="Tìm kiếm người dùng..." value="">
+      <input type="text" class="form-control" name="keyword" placeholder="Tìm kiếm người dùng..." value="<?= (!empty($keyword)) ? $keyword : '' ?>">
     </div>
     <div class="col-3 d-flex"><button class="btn btn-primary" type="submit">Tìm kiếm</button></div>
 
