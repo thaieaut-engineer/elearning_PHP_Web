@@ -9,6 +9,9 @@ $data = [
 
 layout('header', $data);
 
+$getDatailUser = getAll("SELECT a.id, a.fullname, a.email, a.created_at, b.name FROM users a INNER JOIN groups b ON a.group_id = b.id");
+
+
 ?>
 <div class="container mt-4 mb-4">
   <h2 class="text-center mb-4">Danh sách người dùng</h2>
@@ -45,16 +48,19 @@ layout('header', $data);
     </tr>
   </thead>
   <tbody>
+    <?php foreach($getDatailUser as $key => $item): 
+    ?>
     <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
-      <td>@mdo</td>
-      <td>@mdo</td>
-      <td><a href="#" class="btn btn-primary">Phân quyền</a></td>
-      <td><a href="#" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></a></td>
-      <td><a href="#" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
+      <th scope="row"><?= $key + 1 ?></th>
+      <td><?= $item['fullname'] ?></td>
+      <td><?= $item['email'] ?></td>
+      <td><?= date('d/m/Y', strtotime($item['created_at'])) ?></td>
+      <td><?= $item['name'] ?></td>
+      <td><a href="?module=users&action=permission&id=<?= $item['id'] ?>" class="btn btn-primary">Phân quyền</a></td>
+      <td><a href="?module=users&action=edit&id=<?= $item['id'] ?>" class="btn btn-warning"><i class="fa-solid fa-pencil"></i></a></td>
+      <td><a href="?module=users&action=delete&id=<?= $item['id'] ?>" onclick="return confirm('Bạn có chắc chắn muốn xóa không?')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a></td>
     </tr>
+    <?php endforeach; ?>
   </tbody>
 </table>
 <nav aria-label="Page navigation example">
