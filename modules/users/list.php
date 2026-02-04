@@ -40,7 +40,28 @@ if(isGet()){
   }
 }
 
-$getDatailUser = getAll("SELECT a.id, a.fullname, a.email, a.created_at, b.name FROM users a INNER JOIN groups b ON a.group_id = b.id $chuoiWhere ORDER BY a.created_at DESC");
+//xử lý phân trang
+$maxData = getRow("SELECT id FROM users"); //tổng dữ liệu
+$perPage = 3; //số dữ liệu trên 1 trang
+$maxPage = ceil($maxData / $perPage); //tính tổng số trang
+$offset = 0; //vị trí bắt đầu lấy dữ liệu
+
+//lấy trang hiện tại
+if(isset($filter['page'])){
+  $page = $filter['page'];
+  if($page < 1){
+    $page = 1;
+  }
+  if($page > $maxPage){
+    $page = $maxPage;
+  }
+}
+
+if(isset($page)){
+$offset = ($page - 1) * $perPage; //vị trí bắt đầu lấy dữ liệu
+}
+
+$getDatailUser = getAll("SELECT a.id, a.fullname, a.email, a.created_at, b.name FROM users a INNER JOIN groups b ON a.group_id = b.id $chuoiWhere ORDER BY a.created_at DESC LIMIT $offset, $perPage");
 
 $getGroup = getAll("SELECT * FROM groups");
 
@@ -99,11 +120,13 @@ $getGroup = getAll("SELECT * FROM groups");
 </table>
 <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    <li class="page-item"><a class="page-link" href="#">Trước</a></li>
+    <li class="page-item"><a class="page-link" href="#">...</a></li>
+    <li class="page-item"><a class="page-link" href="#">4</a></li>
+    <li class="page-item"><a class="page-link" href="#">5</a></li>
+    <li class="page-item"><a class="page-link" href="#">6</a></li>
+    <li class="page-item"><a class="page-link" href="#">...</a></li>
+    <li class="page-item"><a class="page-link" href="#">Sau</a></li>
   </ul>
 </nav>
 </div>
