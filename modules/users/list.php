@@ -13,6 +13,7 @@ $filter = filterData();
 $chuoiWhere = '';
 $group ='0';
 $keyword ='';
+$page = 1;
 if(isGet()){
   if(isset($filter['keyword'])){
     $keyword = $filter['keyword'];
@@ -22,7 +23,7 @@ if(isGet()){
   }
 
   if(!empty($keyword)){
-    if(strpos($chuoiWhere, 'WHERE') == false){
+    if(strpos($chuoiWhere, 'WHERE') === false){
       $chuoiWhere .= ' WHERE ';
     }else{
       $chuoiWhere .= ' AND ';
@@ -57,13 +58,21 @@ if(isset($filter['page'])){
   }
 }
 
-if(isset($page)){
 $offset = ($page - 1) * $perPage; //vị trí bắt đầu lấy dữ liệu
-}
 
 $getDatailUser = getAll("SELECT a.id, a.fullname, a.email, a.created_at, b.name FROM users a INNER JOIN groups b ON a.group_id = b.id $chuoiWhere ORDER BY a.created_at DESC LIMIT $offset, $perPage");
 
 $getGroup = getAll("SELECT * FROM groups");
+
+if(!empty($_SERVER['QUERY_STRING'])){
+    $queryString = $_SERVER['QUERY_STRING'];
+    $queryString = str_replace('&page='.$page, '', $queryString);
+}
+
+if($group > 0 || !empty($keyword)){
+  $maxData2 = getRow("SELECT a.id FROM users a $chuoiWhere"); //tổng dữ liệu
+  $maxPage = ceil($maxData2 / $perPage); //tính tổng số trang
+}
 
 ?>
 <div class="container mt-4 mb-4">
@@ -121,7 +130,7 @@ $getGroup = getAll("SELECT * FROM groups");
 <nav aria-label="Page navigation example">
   <ul class="pagination">
     <?php if(isset($page) && $page > 1): ?>
-    <li class="page-item"><a class="page-link" href="?module=users&action=list&page=<?= $page - 1 ?>">Trước</a></li>
+    <li class="page-item"><a class="page-link" href="?<?= $queryString ?>&page=<?= $page - 1 ?>">Trước</a></li>
     <?php endif; ?>
 
     <?php 
@@ -131,7 +140,7 @@ $getGroup = getAll("SELECT * FROM groups");
     }
     ?>
     <?php if($start > 1): ?>
-      <li class="page-item"><a class="page-link" href="?module=users&action=list&page=<?= $page - 1 ?>">...</a></li>
+      <li class="page-item"><a class="page-link" href="?<?= $queryString ?>&page=<?= $start ?>">...</a></li>
     <?php endif;
     $end = $page + 1;
     if($end > $maxPage){
@@ -139,15 +148,15 @@ $getGroup = getAll("SELECT * FROM groups");
     }
     ?>
     <?php for($i = $start; $i <= $end; $i++): ?>
-    <li class="page-item <?= ($i == $page) ? 'active' : '' ?>"><a class="page-link" href="?module=users&action=list&page=<?= $i ?>"><?= $i ?></a></li>
+    <li class="page-item <?= ($i == $page) ? 'active' : '' ?>"><a class="page-link" href="?<?= $queryString ?>&page=<?= $i ?>"><?= $i ?></a></li>
     <?php endfor; ?>
 
     <?php if($end < $maxPage): ?>
-    <li class="page-item"><a class="page-link" href="?module=users&action=list&page=<?= $maxPage ?>">...</a></li>
+    <li class="page-item"><a class="page-link" href="?<?= $queryString ?>&page=<?= $maxPage ?>">...</a></li>
     <?php endif; ?>
 
     <?php if(isset($page) && $page < $maxPage): ?>
-    <li class="page-item"><a class="page-link" href="?module=users&action=list&page=<?= $page + 1 ?>">Sau</a></li>
+    <li class="page-item"><a class="page-link" href="?<?= $queryString ?>&page=<?= $page + 1 ?>">Sau</a></li>
     <?php endif; ?>
   </ul>
 </nav>
