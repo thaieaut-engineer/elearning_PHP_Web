@@ -42,7 +42,7 @@ if(isGet()){
 
 //xử lý phân trang
 $maxData = getRow("SELECT id FROM users"); //tổng dữ liệu
-$perPage = 3; //số dữ liệu trên 1 trang
+$perPage = 6; //số dữ liệu trên 1 trang
 $maxPage = ceil($maxData / $perPage); //tính tổng số trang
 $offset = 0; //vị trí bắt đầu lấy dữ liệu
 
@@ -120,13 +120,35 @@ $getGroup = getAll("SELECT * FROM groups");
 </table>
 <nav aria-label="Page navigation example">
   <ul class="pagination">
-    <li class="page-item"><a class="page-link" href="#">Trước</a></li>
-    <li class="page-item"><a class="page-link" href="#">...</a></li>
-    <li class="page-item"><a class="page-link" href="#">4</a></li>
-    <li class="page-item"><a class="page-link" href="#">5</a></li>
-    <li class="page-item"><a class="page-link" href="#">6</a></li>
-    <li class="page-item"><a class="page-link" href="#">...</a></li>
-    <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+    <?php if(isset($page) && $page > 1): ?>
+    <li class="page-item"><a class="page-link" href="?module=users&action=list&page=<?= $page - 1 ?>">Trước</a></li>
+    <?php endif; ?>
+
+    <?php 
+    $start = $page - 1;
+    if($start < 1){
+      $start = 1;
+    }
+    ?>
+    <?php if($start > 1): ?>
+      <li class="page-item"><a class="page-link" href="?module=users&action=list&page=<?= $page - 1 ?>">...</a></li>
+    <?php endif;
+    $end = $page + 1;
+    if($end > $maxPage){
+      $end = $maxPage;
+    }
+    ?>
+    <?php for($i = $start; $i <= $end; $i++): ?>
+    <li class="page-item <?= ($i == $page) ? 'active' : '' ?>"><a class="page-link" href="?module=users&action=list&page=<?= $i ?>"><?= $i ?></a></li>
+    <?php endfor; ?>
+
+    <?php if($end < $maxPage): ?>
+    <li class="page-item"><a class="page-link" href="?module=users&action=list&page=<?= $maxPage ?>">...</a></li>
+    <?php endif; ?>
+
+    <?php if(isset($page) && $page < $maxPage): ?>
+    <li class="page-item"><a class="page-link" href="?module=users&action=list&page=<?= $page + 1 ?>">Sau</a></li>
+    <?php endif; ?>
   </ul>
 </nav>
 </div>
