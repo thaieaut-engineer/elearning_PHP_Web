@@ -74,10 +74,17 @@ if($group > 0 || !empty($keyword)){
   $maxPage = ceil($maxData2 / $perPage); //tính tổng số trang
 }
 
+$msg = getSessionFlash('msg');
+$msgType = getSessionFlash('msg_type');
+
 ?>
 <div class="container mt-4 mb-4">
   <h2 class="text-center mb-4">Danh sách người dùng</h2>
   <a href="?module=users&action=add" class="btn btn-success mb-3"><i class="fa-solid fa-plus"></i> Thêm người dùng mới</a>
+  <?php 
+        if(!empty($msg) && !empty($msgType)){
+        getMsg($msg, $msgType);
+        } ?>
   <form class="mb-3" action="" method="get">
     <input type="hidden" name="module" value="users">
     <input type="hidden" name="action" value="list">

@@ -23,6 +23,8 @@ if(!checkLogin()){
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="<?= HOST_URL_TEMPLATES; ?>/assets/css/style.css?version=1.0.1">
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
