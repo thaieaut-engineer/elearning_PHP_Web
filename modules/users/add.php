@@ -60,7 +60,7 @@ if(isPost()){
   }
 
   if(empty($errors)){
-    $data = [
+    $dataInsert = [
         'fullname' => trim($filter['fullname']),
         'email' => trim($filter['email']),
         'phone' => trim($filter['phone']),
@@ -71,7 +71,7 @@ if(isPost()){
         'status' => (int)$filter['status'],
         'created_at' => date('Y-m-d H:i:s'),
     ];
-    $insert = insert('users', $data);
+    $insert = insert('users', $dataInsert);
     if($insert){
         setSessionFlash('msg', 'Thêm tài khoản thành công.');
         setSessionFlash('msg_type', 'success');
@@ -140,7 +140,7 @@ $errorsArr = getSessionFlash('errors');
         </div>
         <div class="col-6 pb-3">
             <label for="address">Địa chỉ</label>
-            <input id="address" type="text" class="form-control" placeholder="Địa chỉ">
+            <input id="address" name="address" type="text" class="form-control" placeholder="Địa chỉ">
         </div>
         <div class="col-3 pb-3">
             <label for="group">Nhóm</label>
@@ -164,6 +164,7 @@ $errorsArr = getSessionFlash('errors');
         </div>
     </div>
     <button type="submit" class="btn btn-success">Xác nhận</button>
+    <button type="button" class="btn btn-secondary" onclick="window.history.back()">Quay lại</button>
     </form>
 </div>
 
